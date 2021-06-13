@@ -32,16 +32,19 @@
                       <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                   </ul>
-                  <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                  </form>
+
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Log In</a>
+                      </li>
+
+                    </ul>
                 </div>
               </nav>
               
                 
               <div class="container">
-                  <div class="row">
+                  <div class="row my-3">
                     <div class="col-9">
 
             <h1>About Me</h1>
@@ -61,14 +64,17 @@
             
                 </div>
                 <div class="row">
-                  <div class="col-sm bg-info">
-                    One of three columns
+                  <div class="col-12">
+                    <h2>Portfolio</h2>
                   </div>
-                  <div class="col-sm bg-secondary">
-                    One of three columns
+                  <div class="col-sm col-lg-6 bg-info"> <!--sm 은 화면 크기가 small 일때만 적용하는 기준이라는 의미임 --> 
+                    <img src="./images/image_a.jpg" class="img-fluid" width="200px">
                   </div>
-                  <div class="col-sm bg-warning">
-                    One of three columns
+                  <div class="col-sm col-lg-3 bg-secondary">
+                    <img src="./images/image_b.jpg" class="img-fluid">
+                  </div>
+                  <div class="col-sm col-lg-3 bg-warning">
+                    <img src="./images/image_c.jpg" class="img-fluid">
                   </div>
                 </div>
             </div>
