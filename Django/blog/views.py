@@ -1,14 +1,18 @@
 from .models import Post
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
-class PostList(ListView):
+class PostList(ListView):  # 이게 지금 list view가 레코드 목록 형태 보여줄때 사용하는거고,
     model = Post
     # 이렇게 안하고, 그냥 저 템플릿 이름 바꿔도 괜찮은데 난 이게 편해서 이름 지정해줌
     template_name = 'blog/index.html'
     ordering = '-pk'  # 이거는 FCV 방식에서 order_by(-pk)랑 똑같은 거임.
 
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'blog/single_post_page.html'
 
 # 이거는 FCV 방식이라서  CBV 방식으로 하기 위해서 주석 처리함.
 # def index(request):
