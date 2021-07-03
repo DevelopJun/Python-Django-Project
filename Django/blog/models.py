@@ -12,6 +12,9 @@ class Post(models.Model):
         upload_to='blog/images/%Y/%m/%d/', blank=True)
     # 이제 이미지를 저장할 경로를 model에서 구현 하는 부분임. 연도 폴더, 월 폴더, 일 폴더까지 내려간 위치
     # 근데 이게 빨라서 하는거지, 연도, 시간 이렇게 폴더 플로우는 비교적 빠른데, 한 폴더에 다 넣으면 찾는데 서버가 너무 힘들어 하거든,
+
+    file_upload = models.FileField(
+        upload_to='blog/files/%Y/%m/%d/', blank=True)  # 이거 이제 파일 필드임. # 파일도 올릴 수 있도록 모델 만든거지
     # 처음 레코드 생성될떄 현지 시각이 자동으로 저장되게 하는게 auto_now_add
     created_at = models.DateTimeField(auto_now_add=True)
     # auto_now 는 설정해서 다시 저장될때 그 시각 저장.
