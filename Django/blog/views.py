@@ -15,3 +15,15 @@ def index(request):
             'posts': posts,  # 지금 이걸로 posts 를 index html에 뿌려주고 있음.
         }
     )
+
+
+def single_post_page(request, pk):
+    post = Post.objects.get(pk=pk)  # 지금 괄호 안의 조건을 만족하는 Post 레코드를 가져오라는 뜻입니다.
+
+    return render(
+        request,
+        'blog/single_post_page.html',
+        {
+            'post': post,
+        }
+    )

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }} -Blog</title>
+</head>
+<body>
+    <nav>
+        <a href="/blog/">Blog</a>
+    </nav>
+        <h1>{{ post.title }}</h1>
+        <h4>{{ post.created_at}}</h4>  
+        <p>{{ post.content }}</p>  
+        <!--단순히 변수를 의미하는 곳에서는 이렇게 {} 이걸로 -->
+    <hr/>
+        <h3>여기 댓글이 들어올 수 있겠지요</h3>
+
+</body>
+</html>
