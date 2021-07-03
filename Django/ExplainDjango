@@ -1,3 +1,10 @@
 왜 SQLite3을 사용하는가? 
 이거 특징이 파일 하나로 관리하는 데이터 베이스라는 점이고, 오라클, MYSQL, MongoDB, PostgreSQL 등 다른 데이터 베이스는 따로 복잡한
 과정을 거쳐야함. 
+
+FBV, function based view 
+CBV, Class based view 
+
+둘 중에 하나를 선택해서 
+
+ctrl + u 하면 프론트 소스코드 볼 수 있음 

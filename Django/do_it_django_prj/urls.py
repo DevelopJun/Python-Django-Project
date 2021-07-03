@@ -20,4 +20,6 @@ from django.urls.conf import include
 urlpatterns = [
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
+    # 이게 첫 메인 화면인거지, path 가 공백이니까 8000포트 url 그대로
+    path('', include('single_pages.urls')),
 ]
