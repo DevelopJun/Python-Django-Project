@@ -17,9 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
+from django.conf import settings  # 이거를 하는 이유가, static 파일이랑 setting 파일을 사용해야하니까,
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
     # 이게 첫 메인 화면인거지, path 가 공백이니까 8000포트 url 그대로
     path('', include('single_pages.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL,
+                      document_root=settings.MEDIA_ROOT)  # 이미지 URL 등록한거임

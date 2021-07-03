@@ -7,6 +7,11 @@ class Post(models.Model):
     title = models.CharField(max_length=30)  # 이거는 문자 담는 필드
     content = models.TextField()  # 길이 제한이 없도록 TextField 만들었고,
 
+    # blank=True라고 하는 이유가, 이 필드가 필수 필드가 아니란거지, blank=True라고 안하면 왜 안채웠냐고 뭐라하거든,
+    head_image = models.ImageField(
+        upload_to='blog/images/%Y/%m/%d/', blank=True)
+    # 이제 이미지를 저장할 경로를 model에서 구현 하는 부분임. 연도 폴더, 월 폴더, 일 폴더까지 내려간 위치
+    # 근데 이게 빨라서 하는거지, 연도, 시간 이렇게 폴더 플로우는 비교적 빠른데, 한 폴더에 다 넣으면 찾는데 서버가 너무 힘들어 하거든,
     # 처음 레코드 생성될떄 현지 시각이 자동으로 저장되게 하는게 auto_now_add
     created_at = models.DateTimeField(auto_now_add=True)
     # auto_now 는 설정해서 다시 저장될때 그 시각 저장.
