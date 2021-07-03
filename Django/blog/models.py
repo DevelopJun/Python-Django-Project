@@ -1,10 +1,11 @@
 from django.db import models
+import os
 
 # 여기에 Post 모델을 정의하고, admin.py에 코드를 추가하면 된다.
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=30)  # 이거는 문자 담는 필드
+    title = models.CharField(max_length=30)  # 이거는 문자 담는 필드,
     content = models.TextField()  # 길이 제한이 없도록 TextField 만들었고,
 
     # blank=True라고 하는 이유가, 이 필드가 필수 필드가 아니란거지, blank=True라고 안하면 왜 안채웠냐고 뭐라하거든,
@@ -29,3 +30,11 @@ class Post(models.Model):
         # 여기서 잘 이해안가는데, 일단 이게 get_absoulte_url()함수를 만드는 과정임.
         # 이렇게 하면, 리턴 주면서 저기 blog/1/ 이나 blog/2/ 로 들어갈 수 있다.
         return f'/blog/{self.pk}/'
+
+    # 이 부분이 파일 이름 downloat해서 보여질 수 있도록 설계하는 부분
+
+    def get_file_name(self):
+        return os.path.basename(self.file_upload.name)
+
+    def get_file_ext(self):
+        return self.get_file_name().split('.')[-1]

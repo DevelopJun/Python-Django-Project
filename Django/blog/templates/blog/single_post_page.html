@@ -13,6 +13,8 @@
         <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen"/>
         <!--Custom styles for this template-->
         <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}" media="screen">
+        <script src="https://kit.fontawesome.com/eb0e7c00c5.js" crossorigin="anonymous"></script> <!--이게 지금 외부에 Css 템플릿 들고 오는 곳인데, 여기서 이제 내 아이디 쳐서 fontawsome 저기 아이콘 들고 오는거지, 파일 업로드 아이콘-->
+
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -56,10 +58,27 @@
                         <img class="img-fluid rounded" src="https://picsum.photos/seed/{{ post.id }}/600/300" alt="random_image"> <!--이게 만약에 위에 안먹을때 랜덤 이미지 만들어주는거임-->
                         {% endif %}
                         <!--이게 seed로 id 즉 pk 값으로 고정하는거임 -->
-
+                            <hr/>
                         <!-- Post content-->
                         <section class="mb-5">
                            <p>{{ post.content }}</p>
+                           <!-- 파일 다운로드 하는 부분 -->
+                           {% if post.file_upload %}
+                           <a href="{{ post.file_upload.url }}" button type="button" class="btn btn-light">Download:
+
+                            {% if post.get_file_ext == 'csv' %}
+                                <i class="fas fa-file-csv"></i>
+                            {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+                                <i class="far fa-file-excel"></i>
+                            {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                                <i class="fas fa-file-word"></i>  
+                            {% else %}
+                                <i class="far fa-file"></i>
+                            {% endif %}
+                                {{ post.get_file_name}}
+                        
+                           </a>
+                           {% endif %}
                         </section>
                     </article>
                     <!-- Comments section-->
