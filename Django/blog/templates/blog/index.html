@@ -85,8 +85,13 @@
                         {% for p in post_list %}
                          <!-- Blog post-->
                          <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top" src="{{ p.head_image.url }}" alt="Card image cap" /></a> <!--image 불러오는거임-->
-                            <div class="card-body">
+                             {% if p.head_image %}
+                            <a href="#!"><img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image" /></a> <!--image 불러오는거임-->
+                             {% else %} <!-- 이미지 없어도 할 수 있도록 alt 보여주고,-->
+                             <img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/600/300" alt="random_image"> <!--이게 만약에 위에 안먹을때 랜덤 이미지 만들어주는거임-->
+                                                        <!--이게 seed로 id 즉 pk 값으로 고정하는거임 -->
+                             {% endif %}
+                             <div class="card-body">
                                 <h2 class="card-title h4">{{ p.title }}</h2>
                                 <p class="card-text">{{ p.content }}</p>
                                 <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read more &rarr;</a>
