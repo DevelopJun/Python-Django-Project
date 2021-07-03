@@ -8,6 +8,9 @@ class Post(models.Model):
     title = models.CharField(max_length=30)  # 이거는 문자 담는 필드,
     content = models.TextField()  # 길이 제한이 없도록 TextField 만들었고,
 
+    # 이거 지금 후크 텍스트로 그 워싱턴 포스트 같은 웹 사이트가 제목 아래에 드는 소제목
+    hook_text = models.CharField(max_length=100, blank=True)
+
     # blank=True라고 하는 이유가, 이 필드가 필수 필드가 아니란거지, blank=True라고 안하면 왜 안채웠냐고 뭐라하거든,
     head_image = models.ImageField(
         upload_to='blog/images/%Y/%m/%d/', blank=True)

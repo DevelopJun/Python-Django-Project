@@ -93,7 +93,10 @@
                              {% endif %}
                              <div class="card-body">
                                 <h2 class="card-title h4">{{ p.title }}</h2>
-                                <p class="card-text">{{ p.content }}</p>
+                                {% if p.hook_text %}
+                                    <h5 class="text-muted">{{ p.hook_text }}</h5> <!--text muted 하는 이유가 그냥 연하게 할려고-->
+                                {% endif %}
+                                <p class="card-text">{{ p.content | truncatewords:45 }}</p> <!-- 45개 단어만 출력하도록 truncatewords 씀.-->
                                 <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read more &rarr;</a>
                             </div>
                             <div class="{{ p.created_at }}">
