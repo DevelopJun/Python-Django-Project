@@ -26,7 +26,9 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # 이 포스트의 작성자가 데이터베이스에서 삭제 되었을 떄 이 포스트도 같이 삭제한다.
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # 이 포스트의 작성자가 데이터 베이스에서 삭제되었을때 작성자명을 빈칸으로 둔다는 말임.
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         # 이게 지금 해당 포스트 pK값이랑, 해당 포스트의 title 값임. 원래 장고 모델 만들면 자동으로 pk값이 주어지거든?
