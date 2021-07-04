@@ -1,3 +1,4 @@
+from typing import Text
 from unittest.main import main
 from bs4.element import ContentMetaAttributeValue
 from django.http import response
@@ -14,6 +15,25 @@ class TestView(TestCase):
         # 클라이언트를 사용하겠다는 것만 담았슴. # 장고 테스트에서는 client가 테스트를 위한 가상의 사용자라고 생각하면 된다.
         self.client = Client()
 
+    def navbar_test(self, soup):
+        navbar = soup.nav
+        # 1.5 Blog, About Me 라는 문구가 내비게이션 바에 있다.
+        # 이것도 위에 soup로 들고와서 navbar에, assertIn으로 blog 있는지 확인하는거지
+        self.assertIn('Blog', navbar.text)
+        self.assertIn('About_me', navbar.text)
+
+        logo_btn = navbar.find('a', text='Django Project')
+        self.assertEqual(logo_btn.attrs['href'], '/')
+
+        home_btn = navbar.find('a', text='Home')
+        self.assertEqual(home_btn.attrs['href'], '/')
+
+        blog_btn = navbar.find('a', text='Blog')
+        self.assertEqual(blog_btn.attrs['href'], '/blog/')
+
+        about_me_btn = navbar.find('a', text='About_me')
+        self.assertEqual(about_me_btn.attrs['href'], '/about_me/')
+
     def test_post_list(self):
         # 1.1 포스트_목록 페이지를 가지고 온다
         # 이거는 이제 8000/blog/입력했다고 가정하면 그 때 웹 페이지 정보 response에 저장
@@ -27,11 +47,7 @@ class TestView(TestCase):
         # title 요소에서 text만 들고와서 그거 'blog'인지 확인
         self.assertEqual(soup.title.text, 'Blog')
         # 1.4 내비게이션 바가 있다.
-        navbar = soup.nav
-        # 1.5 Blog, About Me 라는 문구가 내비게이션 바에 있다.
-        # 이것도 위에 soup로 들고와서 navbar에, assertIn으로 blog 있는지 확인하는거지
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('About_me', navbar.text)
+        self.navbar_test(soup)
 
         # 2.1 메인 영역에 게시물이 하나도 없다면
         self.assertEqual(Post.objects.count(), 0)
@@ -81,9 +97,7 @@ def test_post_detail(self):  # 함수 처음 만들었으니까 데이터베이�
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # 2.2. 포스트 목록 페이지와 똑같은 네비게이션 바가 있다.
-    navbar = soup.nav
-    self.assertIn('Blog', navbar.text)
-    self.assertIn('About_me', navbar.text)
+    self.navbar_test(soup)
 
     # 2.3. 첫 번째 포스트의 제목이 웹 브라우저 탬 타이틀에 들어 있다.
     self.assertIn(post_001.title, soup.title.text)
