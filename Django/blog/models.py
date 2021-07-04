@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import os
 
 # 여기에 Post 모델을 정의하고, admin.py에 코드를 추가하면 된다.
@@ -24,9 +25,12 @@ class Post(models.Model):
     # auto_now 는 설정해서 다시 저장될때 그 시각 저장.
     updated_at = models.DateTimeField(auto_now=True)
 
+    # 이 포스트의 작성자가 데이터베이스에서 삭제 되었을 떄 이 포스트도 같이 삭제한다.
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         # 이게 지금 해당 포스트 pK값이랑, 해당 포스트의 title 값임. 원래 장고 모델 만들면 자동으로 pk값이 주어지거든?
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title} :: {self.author}'
         # 처음 생성하면 pk1 주어지는거고, 그 다음은 2고 이런거임, 그래서 이렇게하면 포스트 번호랑, 포스트 제목이랑 나오게 된다.
 
     def get_absolute_url(self):
