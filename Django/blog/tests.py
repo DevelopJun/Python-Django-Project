@@ -4,7 +4,7 @@ from bs4.element import ContentMetaAttributeValue
 from django.http import response
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
-from .models import Post
+from .models import Post, Category
 from django.contrib.auth.models import User  # 모델을 임폴트 하고,
 
 # 뷰 측면에서 테스트하겠다는 의미를 TestView
@@ -20,6 +20,29 @@ class TestView(TestCase):
         self.user_obama = User.objects.create_user(
             username='obama', password='somepassword')
         # usrename이 trump, obama고 패스워드 somepassword인거 맘ㄴ들었음.
+
+        self.category_programming = Category.objects.create(
+            name='programming', slug='programming')
+        self.category_music = Category.objects.create(
+            name='music', slug='music')
+
+        post_001 = Post.objects.create(
+            title='첫 번째 포스트 입니다.',
+            content='Hello World. We are the world',
+            Category=self.category_programming,
+            author=self.user_trump,
+        )
+        post_002 = Post.objects.create(
+            title='두 번째 포스트 입니다.',
+            content='1등이 전부는 아니잖아요',
+            Category=self.category_music,
+            author=self.user_obama,
+        )
+        post_003 = Post.objects.create(
+            title='세 번째 포스트 입니다.',
+            content='category가 없을 수도 있죠',
+            author=self.user_obama,
+        )
 
     def navbar_test(self, soup):
         navbar = soup.nav

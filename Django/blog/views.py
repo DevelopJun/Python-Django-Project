@@ -1,4 +1,4 @@
-from .models import Post
+from .models import Post, Category
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
@@ -8,6 +8,15 @@ class PostList(ListView):  # 이게 지금 list view가 레코드 목록 형태 
     # 이렇게 안하고, 그냥 저 템플릿 이름 바꿔도 괜찮은데 난 이게 편해서 이름 지정해줌
     template_name = 'blog/index.html'
     ordering = '-pk'  # 이거는 FCV 방식에서 order_by(-pk)랑 똑같은 거임.
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList, self).get_context_data()
+        # 모든 카테고리를 들고와서 'categories'라는 이름의 키에 연결해 담는거임.
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(
+            category=None).count()
+
+        return context
 
 
 class PostDetail(DetailView):

@@ -5,6 +5,20 @@ import os
 # 여기에 Post 모델을 정의하고, admin.py에 코드를 추가하면 된다.
 
 
+class Category(models.Model):
+    # unique=True로 만들면 동일한 name을 갖는 카테고리를 또 만들 수 없음.
+    name = models.CharField(max_length=50, unique=True)
+    # slug 필드를 만들때 사용한 SlugField는 사람이 읽을 수 있는 텍스트로 고유 URL을 만들고 싶을때 사용함.
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+    # 원래 slugField 한글 지원 안하는데, allow_unicode=True로 설정해 한글로도 만들 수 있는거임.
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
 class Post(models.Model):
     title = models.CharField(max_length=30)  # 이거는 문자 담는 필드,
     content = models.TextField()  # 길이 제한이 없도록 TextField 만들었고,
@@ -29,6 +43,10 @@ class Post(models.Model):
     # author = models.ForeignKey(User, on_delete=models.CASCADE)
     # 이 포스트의 작성자가 데이터 베이스에서 삭제되었을때 작성자명을 빈칸으로 둔다는 말임.
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    # 여기 author은 User 라는 원래 제공되는 class 사용한거고,
+    category = models.ForeignKey(
+        Category, null=True, blank=True, on_delete=models.SET_NULL)
+    # 여기 카테고리는 위에 우리가 class 직접 만들었잖슴.
 
     def __str__(self):
         # 이게 지금 해당 포스트 pK값이랑, 해당 포스트의 title 값임. 원래 장고 모델 만들면 자동으로 pk값이 주어지거든?

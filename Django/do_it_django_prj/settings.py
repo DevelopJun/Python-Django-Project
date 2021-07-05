@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',  # 여기서 그냥 blog 만 쓰면 안된다 .app.이거 써야함 뒤에
     'single_pages.apps.SinglePagesConfig',
+    'django_extensions',
 ]
 
 
