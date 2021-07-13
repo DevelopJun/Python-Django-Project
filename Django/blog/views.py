@@ -21,6 +21,16 @@ class PostList(ListView):  # 이게 지금 list view가 레코드 목록 형태 
 
 class PostDetail(DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data()
+        # 모든 카테고리를 들고와서 'categories'라는 이름의 키에 연결해 담는거임.
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(
+            category=None).count()
+
+        return context
+
     template_name = 'blog/single_post_page.html'
 
 # 이거는 FCV 방식이라서  CBV 방식으로 하기 위해서 주석 처리함.

@@ -122,28 +122,30 @@ def test_post_detail(self):  # 함수 처음 만들었으니까 데이터베이�
     )
     # 1.2. 그 포스트의 url은 'blog/1/' 이다
     # 여기서 당연히 처음 post 한개 만들었으니 pk(1)이 된다.
-    self.assertEqual(post_001.get_absolute_url(), 'blog/1/')
+    self.assertEqual(self.post_001.get_absolute_url(), 'blog/1/')
 
     # 2. 포스트의 상세 페이지 테스트
     # 2.1. 첫 번째 포스트의 url로 접근하면 정상적으로 작동한다(status : 200 )
-    response = self.client.get(post_001.get_absolute_url())
+    response = self.client.get(self.post_001.get_absolute_url())
     self.assertEqual(response.status_code, 200)
     # 이게 soup에 이제 담아서, 파싱하여 다루기 편하게 만드는거임.
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # 2.2. 포스트 목록 페이지와 똑같은 네비게이션 바가 있다.
     self.navbar_test(soup)
+    self.category_card_test(soup)
 
     # 2.3. 첫 번째 포스트의 제목이 웹 브라우저 탬 타이틀에 들어 있다.
-    self.assertIn(post_001.title, soup.title.text)
+    self.assertIn(self.post_001.title, soup.title.text)
 
     # 2.4. 첫 번째 포스트의 제목이 포스트 영역에 있다.
     main_area = soup.find('div', id='main-area')
     post_area = main_area.find('div', id='post-area')
-    self.assertIn(post_001.title, post_area.text)
+    self.assertIn(self.post_001.title, post_area.text)
+    self.assertIn(self.category_programming.name, post_area.text)
 
     # 2.5. 첫 번째 포스트의 작성자(author)가 포스트 영역에 있다(아직 구현할 수 없음.)
     self.assertIn(self.user_trump.username.upper(), post_area.text)
 
     # 2.6. 첫 번째 포스트의 내용(content)이 포스트 영역에 있다.
-    self.assertIn(post_001.content, post_area.text)
+    self.assertIn(self.post_001.content, post_area.text)
